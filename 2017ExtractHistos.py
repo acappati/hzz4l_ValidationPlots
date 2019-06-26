@@ -28,24 +28,24 @@ ZTree    = True
 ########################
 # Data periods options #
 ########################
-period = "data2016"
-#period = "data2017"
+#period = "data2016"
+period = "data2017"
 #period = "data2018"
 
 
 
 if(period == "data2016"):
-    data     = TFile.Open("../ZZ4lAnalysis.root")
+    data     = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2016/AllData/ZZ4lAnalysis.root")
     inputTXT = "JSON_calc/SplittedBlocks_2016data_0p5_new.txt"
     saveAs   = "2016data_0p5_reduced"
 
 elif(period == "data2017"):
-    data     = TFile.Open("../ZZ4lAnalysis.root")
+    data     = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2017/AllData/ZZ4lAnalysis.root")
     inputTXT = "JSON_calc/SplittedBlocks_2017data_0p5_new.txt"
     saveAs   = "2017data_0p5_reduced"
 
 elif(period == "data2018"):
-    data     = TFile.Open("../ZZ4lAnalysis.root")
+    data     = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2018/AllData/ZZ4lAnalysis.root")
     inputTXT = "JSON_calc/SplittedBlocks_2018data_0p5_new.txt"
     saveAs   = "2018data_0p5_reduced"
 

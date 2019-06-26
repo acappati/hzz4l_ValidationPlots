@@ -33,8 +33,8 @@ ZTree     = True
 
 # Data periods options                                                                                                                                                          
 # *****************************                                                                                                                                                
-#period = "data2016"
-period = "data2017"                                                                                                                                                                      
+period = "data2016"
+#period = "data2017"                                                                                                                                                                      
 #period = "data2018"                                                                                                                                                                           
 # *****************************                                                                                                                                                          
 

@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-# *******************
+# **********************************
 # usage: 
 #    python jetsDistrib_DATAvsMC.py
 #
-# *******************
-
+# **********************************
 
 import json
 import ROOT, math, helper, CMSGraphics, CMS_lumi
@@ -17,33 +16,37 @@ from ROOT import kBlue, kRed, kBlack, kWhite, kAzure, kOrange
 
 
 # *****************************
-# Declare all the variables
+# Declare all the variables 
 # options
-redoDATAHistos    = True
-redoMCDYHistos    = True
-redoMCTTbarHistos = True
+# *****************************                                                                                                                         
+redoDATAHistos    = False
+redoMCDYHistos    = False
+redoMCTTbarHistos = False
 
-# data tree options 
+# Data tree options 
+# *****************************                                                                                                                         
 ZZTree    = False
 CRZLLTree = False
 CRZLTree  = False
 ZTree     = True
 
-# data periods options
-# period = "data2016"
-# period = "data2017"
-period = "data2018"
-# *****************************
+# Data periods options                                                                                                                                        
+# *****************************                                                                                                                         
+#period = "data2016"
+period = "data2017"                                                                                                                                               
+#period = "data2018"                                                                                                                                                 
+# *****************************  
 
 
-
-#input file
+# *****************************                                                                                        
+# Input file
+# *****************************                                                                                                                         
 if(period == "data2016"):
-    inputDATAtree    = TFile.Open("/data3/Higgs/170222/AllData/ZZ4lAnalysis.root")        #2016 data
-    inputMCDYtree    = TFile.Open("/data3/Higgs/170222/DYJetsToLL_M50/ZZ4lAnalysis.root") #DYJets 2016 MC
-    inputMCTTbartree = TFile.Open("/data3/Higgs/170222/TTJets_DiLept/ZZ4lAnalysis.root")  #TTbarJets 2016 MC
-    lumi     = 35.9  # fb-1
-    lumiText = '35.9 fb^{-1}'
+    inputDATAtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2016/AllData/ZZ4lAnalysis.root")          # 2016 Data
+    inputMCDYtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/DYJetsToLL_M50_LO/ZZ4lAnalysis.root")  # DYJets 2016 MC (LO)
+    inputMCTTbartree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/TTTo2L2Nu/ZZ4lAnalysis.root")          # TTTo2L2Nu 2016 MC
+    lumi     = 35.92  # fb-1
+    lumiText = '35.92 fb^{-1}'
     if(ZZTree):
         treeDATA    = inputDATAtree.Get("ZZTree/candTree")
         treeMCDY    = inputMCDYtree.Get("ZZTree/candTree")
@@ -68,11 +71,11 @@ if(period == "data2016"):
         print ("Error: wrong option!")
 
 elif(period == "data2017"):
-    inputDATAtree    = TFile.Open("/data3/Higgs/180416/AllData/ZZ4lAnalysis.root")        #2017 data (rereco json)   
-    inputMCDYtree    = TFile.Open("/data3/Higgs/180416/MC_main/DYJetsToLL_M50/ZZ4lAnalysis.root") #DYJets 2017 MC (rereco json)
-    inputMCTTbartree = TFile.Open("/data3/Higgs/180416/MC_main/TTTo2L2Nu/ZZ4lAnalysis.root")      #TTbarJets 2017 MC (rereco json)
-    lumi     = 41.30   # fb-1
-    lumiText = '41.30 fb^{-1}'
+    inputDATAtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2017/AllData/ZZ4lAnalysis.root")         #2017 data (rereco json)   
+    inputMCDYtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/DYJetsToLL_M50_LO/ZZ4lAnalysis.root") #DYJets 2017 MC (LO)
+    inputMCTTbartree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/TTTo2L2Nu/ZZ4lAnalysis.root")        #TTbarJets 2017 MC
+    lumi     = 41.53   # fb-1
+    lumiText = '41.53 fb^{-1}'
     if(ZZTree):
         treeDATA    = inputDATAtree.Get("ZZTree/candTree")
         treeMCDY    = inputMCDYtree.Get("ZZTree/candTree")
@@ -129,16 +132,18 @@ else:
 
 
 # ********************
-#  do data histos 
+#  do DATA histos 
 # ********************
 if(redoDATAHistos) :
 
     TH1.SetDefaultSumw2() # set sumw2 = true fro all the histograms created from now on
 
-    # define data histograms Z->ee
+    # ******************************
+    # Define data histograms Z->ee
+    # ******************************
 
     # nCleanedJets_hist_ele                   = TH1F('nCleanedJets_ele',                   'nCleanedJets_ele',                   30, 0, 30) 
-    nCleanedJetsPt30_hist_ele               = TH1F('nCleanedJetsPt30_ele',               'nCleanedJetsPt30_ele',               15, 0, 15) 
+    nCleanedJetsPt30_hist_ele                 = TH1F('nCleanedJetsPt30_ele',               'nCleanedJetsPt30_ele',               15, 0, 15) 
     # nCleanedJetsPt30BTagged_hist_ele        = TH1F('nCleanedJetsPt30BTagged_ele',        'nCleanedJetsPt30BTagged_ele',        5,  0, 5)
     # nCleanedJetsPt30BTagged_bTagSF_hist_ele = TH1F('nCleanedJetsPt30BTagged_bTagSF_ele', 'nCleanedJetsPt30BTagged_bTagSF_ele', 5,  0, 5)
 
@@ -179,11 +184,12 @@ if(redoDATAHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_ele = TH1F('JetIsBtaggedWithSF_subLeadingJet_fwdeta_ele','JetIsBtaggedWithSF_subLeadingJet_fwdeta_ele',11, 0, 1.1)
 
 
-
-    # define data histograms Z->mumu
+    # ******************************
+    # Define data histograms Z->mumu
+    # ******************************
 
     # nCleanedJets_hist_mu                   = TH1F('nCleanedJets_mu',                   'nCleanedJets_mu',                   30, 0, 30) 
-    nCleanedJetsPt30_hist_mu               = TH1F('nCleanedJetsPt30_mu',               'nCleanedJetsPt30_mu',               15, 0, 15) 
+    nCleanedJetsPt30_hist_mu                 = TH1F('nCleanedJetsPt30_mu',               'nCleanedJetsPt30_mu',               15, 0, 15) 
     # nCleanedJetsPt30BTagged_hist_mu        = TH1F('nCleanedJetsPt30BTagged_mu',        'nCleanedJetsPt30BTagged_mu',        5,  0, 5)
     # nCleanedJetsPt30BTagged_bTagSF_hist_mu = TH1F('nCleanedJetsPt30BTagged_bTagSF_mu', 'nCleanedJetsPt30BTagged_bTagSF_mu', 5,  0, 5)
 
@@ -224,9 +230,9 @@ if(redoDATAHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_mu = TH1F('JetIsBtaggedWithSF_subLeadingJet_fwdeta_mu','JetIsBtaggedWithSF_subLeadingJet_fwdeta_mu',11, 0, 1.1)
 
 
-    
-
-    # read tree 
+    #############
+    # read tree #
+    #############
     print "reading tree", inputDATAtree.GetName(),treeText,treeDATA.GetName()  ,"..."
     
     treeDATA.SetBranchStatus("*",0)  # disable all branches
@@ -244,15 +250,15 @@ if(redoDATAHistos) :
     treeDATA.SetBranchStatus("JetIsBtaggedWithSF",1)
    
     
-
     for event in treeDATA:
         if ZTree :
             if ( event.Zsel < 0 ) : continue # skip events that do not pass the trigger
         else :
             if ( event.ZZsel < 0 ) : continue # skip events that do not pass the trigger
   
-
-        # Z->ee histos
+        ##############
+        # Zee histos #
+        ##############
         if(int(math.fabs(event.LepLepId[0])) == 11 ):
 
             # nCleanedJets_hist_ele.Fill(event.nCleanedJets)
@@ -315,8 +321,9 @@ if(redoDATAHistos) :
                         JetIsBtaggedWithSF_hist_2ndjet_fwdeta_ele.Fill(event.JetIsBtaggedWithSF[1])
                         
             
-
-        # Z->mumu histos
+        ################
+        # Zmumu histos #
+        ################
         if(int(math.fabs(event.LepLepId[0])) == 13 ):
 
             # nCleanedJets_hist_mu.Fill(event.nCleanedJets)
@@ -379,14 +386,14 @@ if(redoDATAHistos) :
                         JetIsBtaggedWithSF_hist_2ndjet_fwdeta_mu.Fill(event.JetIsBtaggedWithSF[1])
                         
             
-
-        
     #save histograms in a root file 
     print "saving histograms into root file ..."
     outFile_DATA = TFile.Open("jetsDistrib_DATA_"+ period + "_" + treeText +".root", "RECREATE")
     outFile_DATA.cd()
-
-    # Zee histos
+    
+    ##############
+    # Zee histos #
+    ##############
     # nCleanedJets_hist_ele.Write()
     nCleanedJetsPt30_hist_ele.Write()
     # nCleanedJetsPt30BTagged_hist_ele.Write()
@@ -428,8 +435,9 @@ if(redoDATAHistos) :
     JetIsBtaggedWithSF_hist_1stjet_fwdeta_ele.Write()
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_ele.Write()
 
-
-    # Zmumu histos
+    ################
+    # Zmumu histos #
+    ################
     # nCleanedJets_hist_mu.Write()
     nCleanedJetsPt30_hist_mu.Write()
     # nCleanedJetsPt30BTagged_hist_mu.Write()
@@ -472,7 +480,6 @@ if(redoDATAHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_mu.Write()
 
 
-
     outFile_DATA.Close()
     print "DATA histo file created!"
 
@@ -484,7 +491,9 @@ if(redoMCDYHistos) :
 
     TH1.SetDefaultSumw2() # set sumw2 = true fro all the histograms created from now on
 
-    # define data histograms Z->ee
+    # ******************************
+    # Define data histograms Z->ee
+    # ******************************
 
     # nCleanedJets_hist_MC_DY_ele                   = TH1F('nCleanedJets_MC_DY_ele',                   'nCleanedJets_MC_DY_ele',                   30, 0, 30) 
     nCleanedJetsPt30_hist_MC_DY_ele               = TH1F('nCleanedJetsPt30_MC_DY_ele',               'nCleanedJetsPt30_MC_DY_ele',               15, 0, 15) 
@@ -528,11 +537,12 @@ if(redoMCDYHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_DY_ele = TH1F('JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_DY_ele','JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_DY_ele',11, 0, 1.1)
 
 
-
-    # define data histograms Z->mumu
+    # ******************************
+    # Define data histograms Z->mumu
+    # ******************************
 
     # nCleanedJets_hist_MC_DY_mu                   = TH1F('nCleanedJets_MC_DY_mu',                   'nCleanedJets_MC_DY_mu',                   30, 0, 30) 
-    nCleanedJetsPt30_hist_MC_DY_mu               = TH1F('nCleanedJetsPt30_MC_DY_mu',               'nCleanedJetsPt30_MC_DY_mu',               15, 0, 15) 
+    nCleanedJetsPt30_hist_MC_DY_mu                 = TH1F('nCleanedJetsPt30_MC_DY_mu',               'nCleanedJetsPt30_MC_DY_mu',               15, 0, 15) 
     # nCleanedJetsPt30BTagged_hist_MC_DY_mu        = TH1F('nCleanedJetsPt30BTagged_MC_DY_mu',        'nCleanedJetsPt30BTagged_MC_DY_mu',        5,  0, 5)
     # nCleanedJetsPt30BTagged_bTagSF_hist_MC_DY_mu = TH1F('nCleanedJetsPt30BTagged_bTagSF_MC_DY_mu', 'nCleanedJetsPt30BTagged_bTagSF_MC_DY_mu', 5,  0, 5)
 
@@ -577,8 +587,8 @@ if(redoMCDYHistos) :
 
 
     # get partial event weight
-    hcounters           = inputMCDYtree.Get("ZZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(40)
+    hcounters           = inputMCDYtree.Get("ZTree/Counters")
+    gen_sumWeights      = hcounters.GetBinContent(1)
     partialSampleWeight = lumi * 1000 / gen_sumWeights
 
 
@@ -593,8 +603,9 @@ if(redoMCDYHistos) :
 
         weight = partialSampleWeight*event.xsec*event.overallEventWeight
 
-
-        # Z->ee histos
+        ##############
+        # Zee histos #
+        ##############
         if(int(math.fabs(event.LepLepId[0])) == 11 ):
 
             # nCleanedJets_hist_MC_DY_ele.Fill(event.nCleanedJets,weight)
@@ -656,11 +667,10 @@ if(redoMCDYHistos) :
                         # JetIsBtagged_hist_2ndjet_fwdeta_MC_DY_ele.Fill(event.JetIsBtagged[1],weight)
                         JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_DY_ele.Fill(event.JetIsBtaggedWithSF[1],weight)
                         
-            
 
-
-
-        # Z->mumu histos
+        ################
+        # Zmumu histos #
+        ################
         if(int(math.fabs(event.LepLepId[0])) == 13 ):
 
             # nCleanedJets_hist_MC_DY_mu.Fill(event.nCleanedJets,weight)
@@ -723,17 +733,14 @@ if(redoMCDYHistos) :
                         JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_DY_mu.Fill(event.JetIsBtaggedWithSF[1],weight)
                         
             
-
-
-    
-
-        
     #save histograms in a root file 
     print "saving histograms into root file ..."
     outFile_MCDY = TFile.Open("jetsDistrib_MC_DY_"+ period + "_" + treeText +".root", "RECREATE")
     outFile_MCDY.cd()
 
-    # Zee histos
+    ##############
+    # Zee histos #
+    ##############
     # nCleanedJets_hist_MC_DY_ele.Write()
     nCleanedJetsPt30_hist_MC_DY_ele.Write()
     # nCleanedJetsPt30BTagged_hist_MC_DY_ele.Write()
@@ -776,8 +783,9 @@ if(redoMCDYHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_DY_ele.Write()
 
 
-    
-    # Zmumu histos
+    ################
+    # Zmumu histos #
+    ################
     # nCleanedJets_hist_MC_DY_mu.Write()
     nCleanedJetsPt30_hist_MC_DY_mu.Write()
     # nCleanedJetsPt30BTagged_hist_MC_DY_mu.Write()
@@ -820,7 +828,6 @@ if(redoMCDYHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_DY_mu.Write()
 
 
-
     outFile_MCDY.Close()
     print "MC DY histo file created!"
 # ********************
@@ -833,10 +840,12 @@ if(redoMCTTbarHistos) :
 
     TH1.SetDefaultSumw2() # set sumw2 = true fro all the histograms created from now on
 
-    # define data histograms Z->ee
+    # ******************************
+    # Define data histograms Z->ee
+    # ******************************
 
     # nCleanedJets_hist_MC_TTbar_ele                   = TH1F('nCleanedJets_MC_TTbar_ele',                   'nCleanedJets_MC_TTbar_ele',                   30, 0, 30) 
-    nCleanedJetsPt30_hist_MC_TTbar_ele               = TH1F('nCleanedJetsPt30_MC_TTbar_ele',               'nCleanedJetsPt30_MC_TTbar_ele',               15, 0, 15) 
+    nCleanedJetsPt30_hist_MC_TTbar_ele                 = TH1F('nCleanedJetsPt30_MC_TTbar_ele',               'nCleanedJetsPt30_MC_TTbar_ele',               15, 0, 15) 
     # nCleanedJetsPt30BTagged_hist_MC_TTbar_ele        = TH1F('nCleanedJetsPt30BTagged_MC_TTbar_ele',        'nCleanedJetsPt30BTagged_MC_TTbar_ele',        5,  0, 5)
     # nCleanedJetsPt30BTagged_bTagSF_hist_MC_TTbar_ele = TH1F('nCleanedJetsPt30BTagged_bTagSF_MC_TTbar_ele', 'nCleanedJetsPt30BTagged_bTagSF_MC_TTbar_ele', 5,  0, 5)
 
@@ -877,11 +886,12 @@ if(redoMCTTbarHistos) :
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_TTbar_ele = TH1F('JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_TTbar_ele','JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_TTbar_ele',11, 0, 1.1)
 
 
-
-    # define data histograms Z->mumu
+    # ******************************
+    # Define data histograms Z->mumu
+    # ******************************
 
     # nCleanedJets_hist_MC_TTbar_mu                   = TH1F('nCleanedJets_MC_TTbar_mu',                   'nCleanedJets_MC_TTbar_mu',                   30, 0, 30) 
-    nCleanedJetsPt30_hist_MC_TTbar_mu               = TH1F('nCleanedJetsPt30_MC_TTbar_mu',               'nCleanedJetsPt30_MC_TTbar_mu',               15, 0, 15) 
+    nCleanedJetsPt30_hist_MC_TTbar_mu                 = TH1F('nCleanedJetsPt30_MC_TTbar_mu',               'nCleanedJetsPt30_MC_TTbar_mu',               15, 0, 15) 
     # nCleanedJetsPt30BTagged_hist_MC_TTbar_mu        = TH1F('nCleanedJetsPt30BTagged_MC_TTbar_mu',        'nCleanedJetsPt30BTagged_MC_TTbar_mu',        5,  0, 5)
     # nCleanedJetsPt30BTagged_bTagSF_hist_MC_TTbar_mu = TH1F('nCleanedJetsPt30BTagged_bTagSF_MC_TTbar_mu', 'nCleanedJetsPt30BTagged_bTagSF_MC_TTbar_mu', 5,  0, 5)
 
@@ -923,11 +933,9 @@ if(redoMCTTbarHistos) :
 
 
 
-
-
     # get partial event weight
-    hcounters           = inputMCTTbartree.Get("ZZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(40)
+    hcounters           = inputMCTTbartree.Get("ZTree/Counters")
+    gen_sumWeights      = hcounters.GetBinContent(1)
     partialSampleWeight = lumi * 1000 / gen_sumWeights
 
 
@@ -942,8 +950,9 @@ if(redoMCTTbarHistos) :
 
         weight = partialSampleWeight*event.xsec*event.overallEventWeight
 
-
-        # Z->ee histos
+        ##############
+        # Zee histos #
+        ##############
         if(int(math.fabs(event.LepLepId[0])) == 11 ):
 
             # nCleanedJets_hist_MC_TTbar_ele.Fill(event.nCleanedJets,weight)
@@ -1006,10 +1015,9 @@ if(redoMCTTbarHistos) :
                         JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_TTbar_ele.Fill(event.JetIsBtaggedWithSF[1],weight)
                         
             
-
-
-
-        # Z->mumu histos
+        ################
+        # Zmumu histos #
+        ################
         if(int(math.fabs(event.LepLepId[0])) == 13 ):
 
             # nCleanedJets_hist_MC_TTbar_mu.Fill(event.nCleanedJets,weight)
@@ -1072,17 +1080,15 @@ if(redoMCTTbarHistos) :
                         JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_TTbar_mu.Fill(event.JetIsBtaggedWithSF[1],weight)
                         
             
-
-
-    
-
         
     #save histograms in a root file 
     print "saving histograms into root file ..."
     outFile_MCTTbar = TFile.Open("jetsDistrib_MC_TTbar_"+ period + "_" + treeText +".root", "RECREATE")
     outFile_MCTTbar.cd()
 
-    # Zee histos
+    ##############
+    # Zee histos #
+    ##############
     # nCleanedJets_hist_MC_TTbar_ele.Write()
     nCleanedJetsPt30_hist_MC_TTbar_ele.Write()
     # nCleanedJetsPt30BTagged_hist_MC_TTbar_ele.Write()
@@ -1124,9 +1130,9 @@ if(redoMCTTbarHistos) :
     JetIsBtaggedWithSF_hist_1stjet_fwdeta_MC_TTbar_ele.Write()
     JetIsBtaggedWithSF_hist_2ndjet_fwdeta_MC_TTbar_ele.Write()
 
-
-    
-    # Zmumu histos
+    ################
+    # Zmumu Histos #
+    ################
     # nCleanedJets_hist_MC_TTbar_mu.Write()
     nCleanedJetsPt30_hist_MC_TTbar_mu.Write()
     # nCleanedJetsPt30BTagged_hist_MC_TTbar_mu.Write()
@@ -1178,6 +1184,7 @@ if(redoMCTTbarHistos) :
 
 # ****************************************
 # create output directory 
+# ****************************************
 outputDir = "jetsDistrib_DATAvsMC_" + str(period) + "_" + str(treeText)
 gSystem.Exec("mkdir -p " + outputDir)
 print "Output directory created!"
@@ -1185,6 +1192,7 @@ print "Output directory created!"
 
 # **************************
 # read data histos from file 
+# **************************
 histoDATA_input = TFile.Open("jetsDistrib_DATA_" + str(period) + "_" + str(treeText) + ".root")
 print 'Reading file', histoDATA_input.GetName(),'...'
 
@@ -1209,21 +1217,21 @@ inDATA_list.append(histoDATA_input.Get('JetPhi_leadingJet_ele'))
 inDATA_list.append(histoDATA_input.Get('JetPhi_subLeadingJet_ele'))
 inDATA_list.append(histoDATA_input.Get('JetPhi_leadingJet_fwdeta_ele'))
 inDATA_list.append(histoDATA_input.Get('JetPhi_subLeadingJet_fwdeta_ele'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_inclusive_ele'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_ele'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_ele'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_fwdeta_ele'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_fwdeta_ele'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_inclusive_ele'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_ele'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_ele'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_fwdeta_ele'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_fwdeta_ele'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_inclusive_ele'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_ele'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_ele'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_ele'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_inclusive_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_fwdeta_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_fwdeta_ele'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_inclusive_ele'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_ele'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_ele'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_fwdeta_ele'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_fwdeta_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_inclusive_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_ele'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_ele'))
 
 # inDATA_list.append(histoDATA_input.Get('nCleanedJets_mu'))
 inDATA_list.append(histoDATA_input.Get('nCleanedJetsPt30_mu'))
@@ -1244,25 +1252,26 @@ inDATA_list.append(histoDATA_input.Get('JetPhi_leadingJet_mu'))
 inDATA_list.append(histoDATA_input.Get('JetPhi_subLeadingJet_mu'))
 inDATA_list.append(histoDATA_input.Get('JetPhi_leadingJet_fwdeta_mu'))
 inDATA_list.append(histoDATA_input.Get('JetPhi_subLeadingJet_fwdeta_mu'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_inclusive_mu'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_mu'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_mu'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_fwdeta_mu'))
-inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_fwdeta_mu'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_inclusive_mu'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_mu'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_mu'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_fwdeta_mu'))
-# inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_fwdeta_mu'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_inclusive_mu'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_mu'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_mu'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_mu'))
-inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_inclusive_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_leadingJet_fwdeta_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetBTagger_subLeadingJet_fwdeta_mu'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_inclusive_mu'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_mu'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_mu'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_leadingJet_fwdeta_mu'))
+## inDATA_list.append(histoDATA_input.Get('JetIsBtagged_subLeadingJet_fwdeta_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_inclusive_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_mu'))
+#inDATA_list.append(histoDATA_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_mu'))
 
 
 # ****************************
 # read DY MC histos from file 
+# ****************************
 histoMCDY_input = TFile.Open("jetsDistrib_MC_DY_" + str(period) + "_" + str(treeText) + ".root")
 print 'Reading file', histoMCDY_input.GetName(),'...'
 
@@ -1287,21 +1296,7 @@ inMCDY_list.append(histoMCDY_input.Get('JetPhi_leadingJet_MC_DY_ele'))
 inMCDY_list.append(histoMCDY_input.Get('JetPhi_subLeadingJet_MC_DY_ele'))
 inMCDY_list.append(histoMCDY_input.Get('JetPhi_leadingJet_fwdeta_MC_DY_ele'))
 inMCDY_list.append(histoMCDY_input.Get('JetPhi_subLeadingJet_fwdeta_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_inclusive_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_leadingJet_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_subLeadingJet_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_leadingJet_fwdeta_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_subLeadingJet_fwdeta_MC_DY_ele'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_inclusive_MC_DY_ele'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_leadingJet_MC_DY_ele'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_subLeadingJet_MC_DY_ele'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_leadingJet_fwdeta_MC_DY_ele'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_subLeadingJet_fwdeta_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_inclusive_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_leadingJet_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_subLeadingJet_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_MC_DY_ele'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_DY_ele'))
+# EXCLUDED PART related to BTAG: IF NEEDED RECOVER THE LINES in the part of DATA
 
 # inMCDY_list.append(histoMCDY_input.Get('nCleanedJets_MC_DY_mu'))
 inMCDY_list.append(histoMCDY_input.Get('nCleanedJetsPt30_MC_DY_mu'))
@@ -1322,26 +1317,13 @@ inMCDY_list.append(histoMCDY_input.Get('JetPhi_leadingJet_MC_DY_mu'))
 inMCDY_list.append(histoMCDY_input.Get('JetPhi_subLeadingJet_MC_DY_mu'))
 inMCDY_list.append(histoMCDY_input.Get('JetPhi_leadingJet_fwdeta_MC_DY_mu'))
 inMCDY_list.append(histoMCDY_input.Get('JetPhi_subLeadingJet_fwdeta_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_inclusive_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_leadingJet_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_subLeadingJet_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_leadingJet_fwdeta_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetBTagger_subLeadingJet_fwdeta_MC_DY_mu'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_inclusive_MC_DY_mu'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_leadingJet_MC_DY_mu'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_subLeadingJet_MC_DY_mu'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_leadingJet_fwdeta_MC_DY_mu'))
-# inMCDY_list.append(histoMCDY_input.Get('JetIsBtagged_subLeadingJet_fwdeta_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_inclusive_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_leadingJet_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_subLeadingJet_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_MC_DY_mu'))
-inMCDY_list.append(histoMCDY_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_DY_mu'))
+# EXCLUDED PART related to BTAG: IF NEEDED RECOVER THE LINES in the part of DATA
 
 
 
-# ****************************
+# ******************************
 # read TTbar MC histos from file 
+# ******************************
 histoMCTTbar_input = TFile.Open("jetsDistrib_MC_TTbar_" + str(period) + "_" + str(treeText) + ".root")
 print 'Reading file', histoMCTTbar_input.GetName(),'...'
 
@@ -1366,21 +1348,8 @@ inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_leadingJet_MC_TTbar_ele'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_subLeadingJet_MC_TTbar_ele'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_leadingJet_fwdeta_MC_TTbar_ele'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_subLeadingJet_fwdeta_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_inclusive_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_leadingJet_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_subLeadingJet_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_leadingJet_fwdeta_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_subLeadingJet_fwdeta_MC_TTbar_ele'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_inclusive_MC_TTbar_ele'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_leadingJet_MC_TTbar_ele'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_subLeadingJet_MC_TTbar_ele'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_leadingJet_fwdeta_MC_TTbar_ele'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_subLeadingJet_fwdeta_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_inclusive_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_leadingJet_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_subLeadingJet_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_MC_TTbar_ele'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_TTbar_ele'))
+# EXCLUDED PART related to BTAG: IF NEEDED RECOVER THE LINES in the part of DATA
+
 
 # inMCTTbar_list.append(histoMCTTbar_input.Get('nCleanedJets_MC_TTbar_mu'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('nCleanedJetsPt30_MC_TTbar_mu'))
@@ -1401,50 +1370,34 @@ inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_leadingJet_MC_TTbar_mu'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_subLeadingJet_MC_TTbar_mu'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_leadingJet_fwdeta_MC_TTbar_mu'))
 inMCTTbar_list.append(histoMCTTbar_input.Get('JetPhi_subLeadingJet_fwdeta_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_inclusive_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_leadingJet_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_subLeadingJet_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_leadingJet_fwdeta_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetBTagger_subLeadingJet_fwdeta_MC_TTbar_mu'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_inclusive_MC_TTbar_mu'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_leadingJet_MC_TTbar_mu'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_subLeadingJet_MC_TTbar_mu'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_leadingJet_fwdeta_MC_TTbar_mu'))
-# inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtagged_subLeadingJet_fwdeta_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_inclusive_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_leadingJet_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_subLeadingJet_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_leadingJet_fwdeta_MC_TTbar_mu'))
-inMCTTbar_list.append(histoMCTTbar_input.Get('JetIsBtaggedWithSF_subLeadingJet_fwdeta_MC_TTbar_mu'))
-
+# EXCLUDED PART related to BTAG: IF NEEDED RECOVER THE LINES in the part of DATA
        
 
 # ******************************
 # do DATA vs MC comparison plots  
+# ******************************
+
 for i in range(len(inDATA_list)) : 
 
     canvas = TCanvas("canvas","canvas",800,800)
 
     hs = THStack("hs","")
 
-
-    # norm = 1 # normalize to MC xsection 
-    norm = inDATA_list[i].Integral() / (inMCTTbar_list[i].Integral() + inMCDY_list[i].Integral()) #normalize MC to data
-
+    norm = 1                                                                                       # Normalize to MC cross-section 
+    #norm = inDATA_list[i].Integral() / (inMCTTbar_list[i].Integral() + inMCDY_list[i].Integral())   # Normalize MC to data
 
     #DATA hist
     inDATA_list[i].SetMarkerStyle(20)
     inDATA_list[i].SetMarkerSize(0.6)
 
-
     #MC TTbar hist
-    inMCTTbar_list[i].Scale(norm) #normalize MC 
+    inMCTTbar_list[i].Scale(norm) # MC normalization 
     inMCTTbar_list[i].SetFillColor(kAzure-2)
     inMCTTbar_list[i].SetLineColor(kBlack)
     hs.Add(inMCTTbar_list[i])
 
     #MC DY hist
-    inMCDY_list[i].Scale(norm) #normalize MC 
+    inMCDY_list[i].Scale(norm) # MC normalization
     inMCDY_list[i].SetFillColor(kOrange-3)
     inMCDY_list[i].SetLineColor(kBlack)
     hs.Add(inMCDY_list[i])
@@ -1482,7 +1435,7 @@ for i in range(len(inDATA_list)) :
 
 
     # legend
-    legend = TLegend(0.82,0.75,0.95,0.89)
+    legend = TLegend(0.7,0.75,0.9,0.9)
     legend.AddEntry(inDATA_list[i],"Data", "p")
     legend.AddEntry(inMCDY_list[i],"DY MC","f")
     legend.AddEntry(inMCTTbar_list[i],"t#bar{t} MC","f")
