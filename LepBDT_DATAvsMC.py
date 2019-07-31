@@ -21,8 +21,8 @@ from ROOT import kBlue, kRed, kBlack, kWhite, kAzure, kOrange, kMagenta
 # options
 # *****************************                                                                                                                         
 redoDATAHistos    = False
-redoMCDYHistos    = False
-redoMCTTbarHistos = False
+redoMCDYHistos    = True
+redoMCTTbarHistos = True
 
 # Data tree options 
 # *****************************                                                                                                                         
@@ -33,19 +33,19 @@ ZTree     = True
 
 # Data periods options                                                                                                                                        
 # *****************************                                                                                                                         
-period = "data2016"
-#period = "data2017"                                                                                                                                               
-#period = "data2018"                                                                                                                                                 
+#period = "data2016"
+#period = "data2017"                                                                                
+period = "data2018"                                                                                                                                                 
 # *****************************  
 
 
 # *****************************                                                                                        
 # Input file
-# *****************************                                                                                                                         
+# *****************************                                                                               
 if(period == "data2016"):
-    inputDATAtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2016/AllData/ZZ4lAnalysis.root")          # 2016 Data                                                   
-    inputMCDYtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/DYJetsToLL_M50_LO/ZZ4lAnalysis.root")  # DYJets 2016 MC (LO)                             
-    inputMCTTbartree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/TTTo2L2Nu/ZZ4lAnalysis.root")          # TTTo2L2Nu 2016 MC         
+    inputDATAtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2016/AllData/ZZ4lAnalysis.root")          # 2016 Data           
+    inputMCDYtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/DYJetsToLL_M50_LO/ZZ4lAnalysis.root")  # DYJets 2016 MC (LO) 
+    inputMCTTbartree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/TTTo2L2Nu/ZZ4lAnalysis.root")          # TTTo2L2Nu 2016 MC    
     lumi     = 35.92  # fb-1
     lumiText = '35.92 fb^{-1}'
     if(ZZTree):
@@ -72,9 +72,9 @@ if(period == "data2016"):
         print ("Error: wrong option!")
 
 elif(period == "data2017"):
-    inputDATAtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2017/AllData/ZZ4lAnalysis.root")          # 2017 Data                                                   
-    inputMCDYtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/DYJetsToLL_M50_LO/ZZ4lAnalysis.root")  # DYJets 2017 MC (LO)                  
-    inputMCTTbartree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/TTTo2L2Nu/ZZ4lAnalysis.root")          # TTTo2L2Nu 2017 MC         
+    inputDATAtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/Data_2017/AllData/ZZ4lAnalysis.root")          # 2017 Data       
+    inputMCDYtree    = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/DYJetsToLL_M50_LO/ZZ4lAnalysis.root")  # DYJets 2017 MC (LO)   
+    inputMCTTbartree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/TTTo2L2Nu/ZZ4lAnalysis.root")          # TTTo2L2Nu 2017 MC   
     lumi     = 41.53   # fb-1
     lumiText = '41.53 fb^{-1}'
     if(ZZTree):
@@ -101,9 +101,9 @@ elif(period == "data2017"):
         print ("Error: wrong option!")
 
 elif(period == "data2018"):
-    inputDATAtree    = TFile.Open("../ZZ4lAnalysis.root")                                 #2018 data    
-    inputMCDYtree    = TFile.Open("/data3/Higgs/190128/DYJetsToLL_M50/ZZ4lAnalysis.root") #DYJets 2018 MC 
-    inputMCTTbartree = TFile.Open("/data3/Higgs/190128/TTTo2L2Nu/ZZ4lAnalysis.root")      #TTbarJets 2017 MC (rereco json)
+    inputDATAtree    = TFile.Open("/eos/user/a/amapane/CJLST-backup/190617/Data_2018/AllData/ZZ4lAnalysis.root") #2018 data    
+    inputMCDYtree    = TFile.Open("/eos/user/e/elfontan/Run2Legacy/MC_2018/DYJetsToLL_M50_LO/ZZ4lAnalysis.root") #DYJets 2018 MC 
+    inputMCTTbartree = TFile.Open("/eos/user/e/elfontan/Run2Legacy/MC_2018/TTTo2L2Nu/ZZ4lAnalysis.root")         #TTbarJets 2017 MC (rereco json)
     lumi     = 58.83   # fb-1
     lumiText = '58.83 fb^{-1}'
     if(ZZTree):
@@ -138,28 +138,33 @@ else:
 # ********************
 if(redoDATAHistos) :
 
-    TH1.SetDefaultSumw2() # set sumw2 = true fro all the histograms created from now on
+    TH1.SetDefaultSumw2() # set sumw2 = true for all the histograms created from now on
 
     # ******************************
     # Define data histograms Z->ee
     # ******************************
-    Z_ele_1st_LepBDT_hist    = TH1F('Z_ele_1st_LepBDT_hist'               , 'LepBDT leading ele'               , 100, -1.1, 1.1) 
-    Z_ele_1st_LepBDT_hist_EB = TH1F('Z_ele_1st_LepBDT_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, -1.1, 1.1) 
-    Z_ele_1st_LepBDT_hist_EE = TH1F('Z_ele_1st_LepBDT_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, -1.1, 1.1) 
+    if ( period == "data2017" ):
+        Z_ele_1st_LepBDT_hist    = TH1F('Z_ele_1st_LepBDT_hist'               , 'LepBDT leading ele'   , 100, 0.75, 1.25) 
+        Z_ele_1st_LepBDT_hist_EB = TH1F('Z_ele_1st_LepBDT_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, 0.75, 1.25) 
+        Z_ele_1st_LepBDT_hist_EE = TH1F('Z_ele_1st_LepBDT_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, 0.75, 1.25) 
+    elif ( period == "data2016" or period == "data2018"):
+        Z_ele_1st_LepBDT_hist    = TH1F('Z_ele_1st_LepBDT_hist'               , 'LepBDT leading ele'   , 100, -1.1, 1.1) 
+        Z_ele_1st_LepBDT_hist_EB = TH1F('Z_ele_1st_LepBDT_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, -1.1, 1.1) 
+        Z_ele_1st_LepBDT_hist_EE = TH1F('Z_ele_1st_LepBDT_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, -1.1, 1.1) 
 
     # ******************************
     # Define data histograms Z->mumu
     # ******************************
-    Z_mu_1st_LepBDT_hist    = TH1F('Z_mu_1st_LepBDT_hist'   , 'LepBDT leading mu'               , 40, 0., 10.) 
-    Z_mu_1st_LepBDT_hist_MB = TH1F('Z_mu_1st_LepBDT_hist_MB', 'LepBDT leading mu in Muon Barrel', 40, 0., 10.) 
-    Z_mu_1st_LepBDT_hist_ME = TH1F('Z_mu_1st_LepBDT_hist_ME', 'LepBDT leading mu in Muon Endcap', 40, 0., 10.) 
+    Z_mu_1st_LepBDT_hist    = TH1F('Z_mu_1st_LepBDT_hist'   , 'LepBDT leading mu'               , 100, 0., 11.) 
+    Z_mu_1st_LepBDT_hist_MB = TH1F('Z_mu_1st_LepBDT_hist_MB', 'LepBDT leading mu in Muon Barrel', 100, 0., 11.) 
+    Z_mu_1st_LepBDT_hist_ME = TH1F('Z_mu_1st_LepBDT_hist_ME', 'LepBDT leading mu in Muon Endcap', 100, 0., 11.) 
 
     if CRZLTree :
-        Z_ExtraEl_LepBDT_hist    = TH1F('Z_ExtraEl_LepBDT_hist'               , 'LepBDT extraEl'               , 100, -1.1, 1.1)
+        Z_ExtraEl_LepBDT_hist    = TH1F('Z_ExtraEl_LepBDT_hist'               , 'LepBDT extraEl'   , 100, -1.1, 1.1)
         Z_ExtraEl_LepBDT_hist_EB = TH1F('Z_ExtraEl_LepBDT_hist_EB', 'LepBDT extraEl in ECAL Barrel', 100, -1.1, 1.1)
         Z_ExtraEl_LepBDT_hist_EE = TH1F('Z_ExtraEl_LepBDT_hist_EE', 'LepBDT extraEl in ECAL Endcap', 100, -1.1, 1.1)
 
-        Z_ExtraMu_LepBDT_hist    = TH1F('Z_ExtraMu_LepBDT_hist'               , 'LepBDT extraMu'               , 100, -1.1, 1.1)
+        Z_ExtraMu_LepBDT_hist    = TH1F('Z_ExtraMu_LepBDT_hist'               , 'LepBDT extraMu'   , 100, -1.1, 1.1)
         Z_ExtraMu_LepBDT_hist_MB = TH1F('Z_ExtraMu_LepBDT_hist_MB', 'LepBDT extraMu in Muon Barrel', 100, -1.1, 1.1)
         Z_ExtraMu_LepBDT_hist_ME = TH1F('Z_ExtraMu_LepBDT_hist_ME', 'LepBDT extraMu in Muon Endcap', 100, -1.1, 1.1)
 
@@ -203,7 +208,6 @@ if(redoDATAHistos) :
                     Z_ele_1st_LepBDT_hist_EB.Fill(event.LepBDT[0])
                 else :
                     Z_ele_1st_LepBDT_hist_EE.Fill(event.LepBDT[0])
-
             else :
                 Z_ele_1st_LepBDT_hist.Fill(event.LepBDT[1])
 
@@ -296,16 +300,21 @@ if(redoMCDYHistos) :
     # ******************************
     # Define data histograms Z->ee
     # ******************************
-    Z_ele_1st_LepBDT_MC_DY_hist    = TH1F('Z_ele_1st_LepBDT_MC_DY_hist'   , 'LepBDT leading ele'               , 100, -1.1, 1.1) 
-    Z_ele_1st_LepBDT_MC_DY_hist_EB = TH1F('Z_ele_1st_LepBDT_MC_DY_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, -1.1, 1.1) 
-    Z_ele_1st_LepBDT_MC_DY_hist_EE = TH1F('Z_ele_1st_LepBDT_MC_DY_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, -1.1, 1.1) 
+    if ( period == "data2017"):
+        Z_ele_1st_LepBDT_MC_DY_hist    = TH1F('Z_ele_1st_LepBDT_MC_DY_hist'   , 'LepBDT leading ele'               , 100, 0.75, 1.25) 
+        Z_ele_1st_LepBDT_MC_DY_hist_EB = TH1F('Z_ele_1st_LepBDT_MC_DY_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, 0.75, 1.25) 
+        Z_ele_1st_LepBDT_MC_DY_hist_EE = TH1F('Z_ele_1st_LepBDT_MC_DY_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, 0.75, 1.25) 
+    elif ( period == "data2016" or period == "data2018"):
+        Z_ele_1st_LepBDT_MC_DY_hist    = TH1F('Z_ele_1st_LepBDT_MC_DY_hist'   , 'LepBDT leading ele'               , 100, -1.1, 1.1) 
+        Z_ele_1st_LepBDT_MC_DY_hist_EB = TH1F('Z_ele_1st_LepBDT_MC_DY_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, -1.1, 1.1) 
+        Z_ele_1st_LepBDT_MC_DY_hist_EE = TH1F('Z_ele_1st_LepBDT_MC_DY_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, -1.1, 1.1) 
 
     # ******************************
     # Define data histograms Z->mumu
     # ******************************
-    Z_mu_1st_LepBDT_MC_DY_hist    = TH1F('Z_mu_1st_LepBDT_MC_DY_hist'   , 'LepBDT leading mu'               , 40, 0., 10.) 
-    Z_mu_1st_LepBDT_MC_DY_hist_MB = TH1F('Z_mu_1st_LepBDT_MC_DY_hist_MB', 'LepBDT leading mu in Muon Barrel', 40, 0., 10.) 
-    Z_mu_1st_LepBDT_MC_DY_hist_ME = TH1F('Z_mu_1st_LepBDT_MC_DY_hist_ME', 'LepBDT leading mu in Muon Endcap', 40, 0., 10.) 
+    Z_mu_1st_LepBDT_MC_DY_hist    = TH1F('Z_mu_1st_LepBDT_MC_DY_hist'   , 'LepBDT leading mu'               , 100, 0., 11.) 
+    Z_mu_1st_LepBDT_MC_DY_hist_MB = TH1F('Z_mu_1st_LepBDT_MC_DY_hist_MB', 'LepBDT leading mu in Muon Barrel', 100, 0., 11.) 
+    Z_mu_1st_LepBDT_MC_DY_hist_ME = TH1F('Z_mu_1st_LepBDT_MC_DY_hist_ME', 'LepBDT leading mu in Muon Endcap', 100, 0., 11.) 
 
     if CRZLTree :
         Z_ExtraEl_LepBDT_MC_DY_hist    = TH1F('Z_ExtraEl_LepBDT_MC_DY_hist'               , 'LepBDT extraEl'               , 100, -1.1, 1.1)
@@ -316,11 +325,24 @@ if(redoMCDYHistos) :
         Z_ExtraMu_LepBDT_MC_DY_hist_MB = TH1F('Z_ExtraMu_LepBDT_MC_DY_hist_MB', 'LepBDT extraMu in Muon Barrel', 100, -1.1, 1.1)
         Z_ExtraMu_LepBDT_MC_DY_hist_ME = TH1F('Z_ExtraMu_LepBDT_MC_DY_hist_ME', 'LepBDT extraMu in Muon Endcap', 100, -1.1, 1.1)
 
-    
-    # get partial event weight
-    hcounters           = inputMCDYtree.Get("ZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(1)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
+
+    # get partial event weight                                                                                                                                                                             
+    if (ZTree) :
+        hcounters           = inputMCDYtree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputMCDYtree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputMCDYtree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputMCDYtree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
 
     # read tree 
@@ -440,37 +462,54 @@ if(redoMCDYHistos) :
 # ********************
 if(redoMCTTbarHistos) :
 
-    TH1.SetDefaultSumw2() # set sumw2 = true fro all the histograms created from now on
+    TH1.SetDefaultSumw2() # set sumw2 = true for all the histograms created from now on
 
     # ******************************
     # Define data histograms Z->ee
     # ******************************
-    Z_ele_1st_LepBDT_MC_TTbar_hist    = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist'   , 'LepBDT leading ele'               , 100, -1.1, 1.1) 
-    Z_ele_1st_LepBDT_MC_TTbar_hist_EB = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, -1.1, 1.1) 
-    Z_ele_1st_LepBDT_MC_TTbar_hist_EE = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, -1.1, 1.1) 
+    if ( period == "data2017"):
+        Z_ele_1st_LepBDT_MC_TTbar_hist    = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist'   , 'LepBDT leading ele'               , 100, 0.75, 1.25) 
+        Z_ele_1st_LepBDT_MC_TTbar_hist_EB = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, 0.75, 1.25) 
+        Z_ele_1st_LepBDT_MC_TTbar_hist_EE = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, 0.75, 1.25) 
+    elif ( period == "data2016" or period == "data2018"):
+        Z_ele_1st_LepBDT_MC_TTbar_hist    = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist'   , 'LepBDT leading ele'               , 100, -1.1, 1.1) 
+        Z_ele_1st_LepBDT_MC_TTbar_hist_EB = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist_EB', 'LepBDT leading ele in ECAL Barrel', 100, -1.1, 1.1) 
+        Z_ele_1st_LepBDT_MC_TTbar_hist_EE = TH1F('Z_ele_1st_LepBDT_MC_TTbar_hist_EE', 'LepBDT leading ele in ECAL Endcap', 100, -1.1, 1.1) 
 
     # ******************************
     # Define data histograms Z->mumu
     # ******************************
-    Z_mu_1st_LepBDT_MC_TTbar_hist    = TH1F('Z_mu_1st_LepBDT_MC_TTbar_hist'   , 'LepBDT leading mu'               , 40, 0., 10.) 
-    Z_mu_1st_LepBDT_MC_TTbar_hist_MB = TH1F('Z_mu_1st_LepBDT_MC_TTbar_hist_MB', 'LepBDT leading mu in Muon Barrel', 40, 0., 10.) 
-    Z_mu_1st_LepBDT_MC_TTbar_hist_ME = TH1F('Z_mu_1st_LepBDT_MC_TTbar_hist_ME', 'LepBDT leading mu in Muon Endcap', 40, 0., 10.) 
+    Z_mu_1st_LepBDT_MC_TTbar_hist    = TH1F('Z_mu_1st_LepBDT_MC_TTbar_hist'   , 'LepBDT leading mu'               , 100, 0., 11.) 
+    Z_mu_1st_LepBDT_MC_TTbar_hist_MB = TH1F('Z_mu_1st_LepBDT_MC_TTbar_hist_MB', 'LepBDT leading mu in Muon Barrel', 100, 0., 11.) 
+    Z_mu_1st_LepBDT_MC_TTbar_hist_ME = TH1F('Z_mu_1st_LepBDT_MC_TTbar_hist_ME', 'LepBDT leading mu in Muon Endcap', 100, 0., 11.) 
 
     if CRZLTree :
-        Z_ExtraEl_LepBDT_MC_TTbar_hist    = TH1F('Z_ExtraEl_LepBDT_MC_TTbar_hist'               , 'LepBDT extraEl'               , 100, -1.1, 1.1)
+        Z_ExtraEl_LepBDT_MC_TTbar_hist    = TH1F('Z_ExtraEl_LepBDT_MC_TTbar_hist'               , 'LepBDT extraEl'   , 100, -1.1, 1.1)
         Z_ExtraEl_LepBDT_MC_TTbar_hist_EB = TH1F('Z_ExtraEl_LepBDT_MC_TTbar_hist_EB', 'LepBDT extraEl in ECAL Barrel', 100, -1.1, 1.1)
         Z_ExtraEl_LepBDT_MC_TTbar_hist_EE = TH1F('Z_ExtraEl_LepBDT_MC_TTbar_hist_EE', 'LepBDT extraEl in ECAL Endcap', 100, -1.1, 1.1)
 
-        Z_ExtraMu_LepBDT_MC_TTbar_hist    = TH1F('Z_ExtraMu_LepBDT_MC_TTbar_hist'               , 'LepBDT extraMu'               , 100, -1.1, 1.1)
+        Z_ExtraMu_LepBDT_MC_TTbar_hist    = TH1F('Z_ExtraMu_LepBDT_MC_TTbar_hist'               , 'LepBDT extraMu'   , 100, -1.1, 1.1)
         Z_ExtraMu_LepBDT_MC_TTbar_hist_MB = TH1F('Z_ExtraMu_LepBDT_MC_TTbar_hist_MB', 'LepBDT extraMu in Muon Barrel', 100, -1.1, 1.1)
         Z_ExtraMu_LepBDT_MC_TTbar_hist_ME = TH1F('Z_ExtraMu_LepBDT_MC_TTbar_hist_ME', 'LepBDT extraMu in Muon Endcap', 100, -1.1, 1.1)
 
-    
-    # get partial event weight
-    hcounters           = inputMCTTbartree.Get("ZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(1)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
 
+    # get partial event weight                                                                                                                                         
+    if (ZTree) :
+        hcounters           = inputMCTTbartree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputMCTTbartree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputMCTTbartree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputMCTTbartree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
     # read tree 
     print "reading tree", inputMCTTbartree.GetName(),treeText,treeMCTTbar.GetName()  ,"..."
@@ -705,7 +744,7 @@ for i in range(len(LepBDTDATA_list)) :
 
     hs.SetTitle("")
     hs.GetXaxis().SetTitle("BDT score")
-    #hs.GetXaxis().SetRangeUser(0.75,1) #EF for ele BDT
+    hs.GetXaxis().SetRangeUser(0.75,1) #EF for ele BDT
     hs.GetXaxis().SetLabelFont(43)
     hs.GetXaxis().SetLabelSize(15)
     hs.GetYaxis().SetTitleSize(20)
@@ -759,7 +798,7 @@ for i in range(len(LepBDTDATA_list)) :
     rp.GetYaxis().SetLabelFont(43)
     rp.GetYaxis().SetLabelSize(15)
 
-    #rp.GetXaxis().SetRangeUser(0.75,1) #EF for ele BDT
+    rp.GetXaxis().SetRangeUser(0.75,1) #EF for ele BDT
     rp.GetXaxis().SetTitleSize(20)
     rp.GetXaxis().SetTitleFont(43)
     rp.GetXaxis().SetTitleOffset(4.)

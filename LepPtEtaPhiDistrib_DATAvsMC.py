@@ -433,12 +433,23 @@ if(redoMCDYHistos) :
     LepPhi_hist_mu_2ndlep_endcap_MC_DY = TH1F('muPhi_subleadingMu_endcap_MC_DY', 'muPhi_subleadingMu_endcap_MC_DY', 35, -3.3, 3.3)
 
 
-
-    # get partial event weight
-    hcounters           = inputMCDYtree.Get("ZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(1)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
-
+    # get partial event weight                                                                                                                                                                             
+    if (ZTree) :
+        hcounters           = inputMCDYtree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputMCDYtree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputMCDYtree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputMCDYtree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
     # read tree 
     print "reading tree", inputMCDYtree.GetName(),treeText,treeMCDY.GetName()  ,"..."
@@ -701,11 +712,23 @@ if(redoMCTTbarHistos) :
     LepPhi_hist_mu_2ndlep_endcap_MC_TTbar = TH1F('muPhi_subleadingMu_endcap_MC_TTbar', 'muPhi_subleadingMu_endcap_MC_TTbar', 35, -3.3, 3.3)
 
 
-
-    # get partial event weight
-    hcounters           = inputMCTTbartree.Get("ZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(1)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
+    # get partial event weight                                                                                                                                      
+    if (ZTree) :
+        hcounters           = inputMCTTbartree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputMCTTbartree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputMCTTbartree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputMCTTbartree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
 
     # read tree 
@@ -1129,7 +1152,7 @@ for i in range(len(inDATA_list)) :
         pad1.SetLogy()
 
     # legend
-    legend = TLegend(0.82,0.75,0.95,0.89)
+    legend = TLegend(0.7,0.75,0.9,0.89)
     legend.AddEntry(inDATA_list[i],"Data", "p")
     legend.AddEntry(inMCDY_list[i],"DY MC","f")
     legend.AddEntry(inMCTTbar_list[i],"t#bar{t} MC","f")

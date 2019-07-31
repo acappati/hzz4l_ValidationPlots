@@ -24,33 +24,93 @@ from helper import DoSimpleFit, Result
 fitMC       = True    #true for fitting MC in FitMC.py 
 fitDATA     = False   #true for fitting DATA in FitDATA.py 
 redoHistos  = True
-applyPU2018 = True    # true for prompt-reco 2018 data 
+applyPU2018 = False    # true for prompt-reco 2018 data 
 
-# data tree options 
+
+# *****************************                                                                                                             
+# Data tree options                                                                                                                                     
+# *****************************                                                                                                                                 
 ZZTree   = False
 CRZLTree = False
 ZTree    = True
-
-# data periods options
-period = "data2018"
-
+# *****************************                                                                                                                            
+# Data periods options                                                                                                                                                 
+# *****************************                                                                                                               
+#period = "data2016"
+#period = "data2017"                                                                                                                                   
+period = "data2018"                                                                                                                                                          
+# *****************************                             
 # MC sample
 MCsample = "DYJets"
-# MCsample = "TTJets"
+#MCsample = "TTJets"
 # *****************************
 
 
-if(period == "data2018"):
-    lumi = 59.61     # fb-1
+if(period == "data2016"):
+    lumi = 35.92     # fb-1
+    #input file
+    if(MCsample == "DYJets"):
+        inputTree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/DYJetsToLL_M50_LO/ZZ4lAnalysis.root") #2016 DY MC (LO) 
+    elif(MCsample == "TTJets"):
+        inputTree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2016/TTTo2L2Nu/ZZ4lAnalysis.root")         #2016 TTbar MC 
+    else:
+        print ("Error: wrong MC sample!")
 
-#input file
-if(MCsample == "DYJets"):
-    inputTree = TFile.Open("/data3/Higgs/190305new/DYJetsToLL_M50_LO/ZZ4lAnalysis.root") #DYJets
-elif(MCsample == "TTJets"):
-    inputTree = TFile.Open("/data3/Higgs/190305new/TTTo2L2Nu/ZZ4lAnalysis.root")  #TTJets 
-else:
-    print ("Error: wrong MC sample!")
+    if(ZZTree):
+        tree      = inputTree.Get("ZZTree/candTree")
+        treeText  = "ZZTree"
+    elif(CRZLTree):
+        tree      = inputTree.Get("CRZLTree/candTree")
+        treeText  = "CRZLTree"
+    elif(ZTree):
+        tree      = inputTree.Get("ZTree/candTree")
+        treeText  = "ZTree"
+    else:
+        print ("Error: wrong option!")
 
+elif(period == "data2017"):
+    lumi = 41.53     # fb-1
+    #input file
+    if(MCsample == "DYJets"):
+        inputTree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/DYJetsToLL_M50_LO/ZZ4lAnalysis.root") #2017 DY MC (LO) 
+    elif(MCsample == "TTJets"):
+        inputTree = TFile.Open("root://lxcms03//data3/Higgs/190617/MC_2017/TTTo2L2Nu/ZZ4lAnalysis.root")         #2017 TTbar MC 
+    else:
+        print ("Error: wrong MC sample!")
+
+    if(ZZTree):
+        tree      = inputTree.Get("ZZTree/candTree")
+        treeText  = "ZZTree"
+    elif(CRZLTree):
+        tree      = inputTree.Get("CRZLTree/candTree")
+        treeText  = "CRZLTree"
+    elif(ZTree):
+        tree      = inputTree.Get("ZTree/candTree")
+        treeText  = "ZTree"
+    else:
+        print ("Error: wrong option!")
+
+elif(period == "data2018"):
+    lumi = 59.74     # fb-1
+    #input file
+    if(MCsample == "DYJets"):
+        inputTree = TFile.Open("/eos/user/e/elfontan/Run2Legacy/MC_2018/DYJetsToLL_M50_LO/ZZ4lAnalysis.root") #2018 DY MC (LO) 
+    elif(MCsample == "TTJets"):
+        inputTree = TFile.Open("/eos/user/e/elfontan/Run2Legacy/MC_2018/TTTo2L2Nu/ZZ4lAnalysis.root")         #2018 TTbar MC 
+    else:
+        print ("Error: wrong MC sample!")
+
+    if(ZZTree):
+        tree      = inputTree.Get("ZZTree/candTree")
+        treeText  = "ZZTree"
+    elif(CRZLTree):
+        tree      = inputTree.Get("CRZLTree/candTree")
+        treeText  = "CRZLTree"
+    elif(ZTree):
+        tree      = inputTree.Get("ZTree/candTree")
+        treeText  = "ZTree"
+    else:
+        print ("Error: wrong option!")
 
 #PU weights
 if(applyPU2018):
@@ -58,24 +118,11 @@ if(applyPU2018):
     hPUWeight= fPU.Get("weights")
 
 
-if(ZZTree):
-    tree      = inputTree.Get("ZZTree/candTree")
-    treeText  = "ZZTree"
-elif(CRZLTree):
-    tree      = inputTree.Get("CRZLTree/candTree")
-    treeText  = "CRZLTree"
-elif(ZTree):
-    tree      = inputTree.Get("ZTree/candTree")
-    treeText  = "ZTree"
-else:
-    print ("Error: wrong option!")
-
 
 #create output directory 
 outputDir = "FitResults_MC_" + str(MCsample) + "_" + str(period) + "_" + str(treeText) 
 gSystem.Exec("mkdir -p " + outputDir)
 print "Output directories created!"
-
 
 
 
@@ -103,12 +150,23 @@ if(redoHistos) :
         ZMass_mu_hist_extraEl  = TH1F( 'ZMass_mu_extraEl' , 'ZMass_mu_extraEl' , 120, 60, 120)  #ZMass , Z->mumu + Extra e
     
 
-
-    # get partial event weight
-    hcounters           = inputTree.Get("ZZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(40)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
-
+    # get partial event weight                                                                                                                                  
+    if (ZTree) :
+        hcounters           = inputTree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputTree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputTree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputTree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
     #read ttree ZTree
     if ZTree : 

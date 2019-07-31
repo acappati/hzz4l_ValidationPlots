@@ -20,9 +20,9 @@ from ROOT import kBlue, kRed, kBlack, kWhite, kAzure, kOrange, kMagenta
 # Declare all the variables 
 # options
 # *****************************                                                                                                                         
-redoDATAHistos    = False
-redoMCDYHistos    = False
-redoMCTTbarHistos = False
+redoDATAHistos    = True
+redoMCDYHistos    = True
+redoMCTTbarHistos = True
 
 # Data tree options 
 # *****************************                                                                                                                         
@@ -372,12 +372,24 @@ if(redoMCDYHistos) :
         Z_ExtraMu_SIP_MC_DY_hist_MB = TH1F('Z_ExtraMu_SIP_MC_DY_hist_MB', 'SIP extraMu in Muon Barrel', 100, 0, 10)
         Z_ExtraMu_SIP_MC_DY_hist_ME = TH1F('Z_ExtraMu_SIP_MC_DY_hist_ME', 'SIP extraMu in Muon Endcap', 100, 0, 10)
 
-    
-    # get partial event weight
-    hcounters           = inputMCDYtree.Get("ZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(1)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
 
+    # get partial event weight                                                                                                                                                         
+    if (ZTree) :
+        hcounters           = inputMCDYtree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputMCDYtree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputMCDYtree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputMCDYtree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
     # read tree 
     print "reading tree", inputMCDYtree.GetName(),treeText,treeMCDY.GetName()  ,"..."
@@ -571,11 +583,23 @@ if(redoMCTTbarHistos) :
         Z_ExtraMu_SIP_MC_TTbar_hist_ME = TH1F('Z_ExtraMu_SIP_MC_TTbar_hist_ME', 'SIP extraMu in Muon Endcap', 100, 0, 10)
 
 
-    # get partial event weight
-    hcounters           = inputMCTTbartree.Get("ZTree/Counters")
-    gen_sumWeights      = hcounters.GetBinContent(1)
-    partialSampleWeight = lumi * 1000 / gen_sumWeights
-
+    # get partial event weight                                                                                                    
+    if (ZTree) :
+        hcounters           = inputMCTTbartree.Get("ZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(1)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (ZZTree) :
+        hcounters           = inputMCTTbartree.Get("ZZTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLTree) :
+        hcounters           = inputMCTTbartree.Get("CRZLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
+    elif (CRZLLTree) :
+        hcounters           = inputMCTTbartree.Get("CRZLLTree/Counters")
+        gen_sumWeights      = hcounters.GetBinContent(40)
+        partialSampleWeight = lumi * 1000 / gen_sumWeights
 
     # read tree 
     print "reading tree", inputMCTTbartree.GetName(),treeText,treeMCTTbar.GetName()  ,"..."
