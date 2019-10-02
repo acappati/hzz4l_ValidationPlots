@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# ********************************
+# ****************************************
 # usage: 
-#    python LepBDT_DATAvsMC.py
+#    python newWEIGHT_LepBDT_DATAvsMC.py
 #
-# ********************************
+# ****************************************
 
 
 import json

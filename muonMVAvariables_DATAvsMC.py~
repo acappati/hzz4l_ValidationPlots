@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# ****************************
+# ******************************************
 # usage: 
-#    python muonVariables.py
+#    python muonMVAvariables_DATAvsMC.py
 #
-# ****************************
+# ******************************************
 
 
 import json
@@ -102,7 +102,7 @@ if(redoDATAHistos) :
     n_event = 0 
     for event in treeDATA:
         n_event += 1 
-        #if (n_event == 1000) : break
+        if (n_event == 1000) : break
         if(n_event % int((treeDATA.GetEntries()/50)) == 0):
                 print "{} %".format(str(100*n_event/treeDATA.GetEntries() + 1))
 
@@ -122,15 +122,12 @@ if(redoDATAHistos) :
             relPFIso_0 = (event.pf_charged_had_iso.at(0) + max (0, event.pf_neutral_had_iso.at(0) + event.pf_photon_iso.at(0) - 0.5 * event.pu_charged_had_iso.at(0))) / event.pT_muon.at(0)
             relPFIso_1 = (event.pf_charged_had_iso.at(1) + max (0, event.pf_neutral_had_iso.at(1) + event.pf_photon_iso.at(1) - 0.5 * event.pu_charged_had_iso.at(1))) / event.pT_muon.at(1)
 
-            #if (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and event.sip_muon.at(0) < 4. and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
-            if (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
-
+            if (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and event.sip_muon.at(0) < 4. and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
                 #print "0 TAG e 1 PROBE!"
                 pb = "at1"
                 tag.SetPtEtaPhiE (event.pT_muon.at(0), event.eta_muon.at(0), event.phi_muon.at(0), event.E_muon.at(0))                                                                 
                 probe.SetPtEtaPhiE (event.pT_muon.at(1), event.eta_muon.at(1), event.phi_muon.at(1), event.E_muon.at(1))                                                                 
-            #elif (event.pT_muon.at(1) > 30. and event.is_pf_muon.at(1) and event.sip_muon.at(1) < 4. and relPFIso_1 < 0.2 and event.dxy_muon.at(1) < 0.5 and event.dz_muon.at(1) < 1.):
-            elif (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
+            elif (event.pT_muon.at(1) > 30. and event.is_pf_muon.at(1) and event.sip_muon.at(1) < 4. and relPFIso_1 < 0.2 and event.dxy_muon.at(1) < 0.5 and event.dz_muon.at(1) < 1.):
                 #print "1 TAG e 0 PROBE!"
                 pb = "at0"
                 tag.SetPtEtaPhiE (event.pT_muon.at(1), event.eta_muon.at(1), event.phi_muon.at(1), event.E_muon.at(1))                                                                 
@@ -286,7 +283,7 @@ if(redoMCDYHistos):
     n_event = 0 
     for event in treeMCDY:
         n_event += 1 
-        #if (n_event == 1000) : break
+        if (n_event == 1000) : break
         if(n_event % int((treeMCDY.GetEntries()/50)) == 0):
                 print "{} %".format(str(100*n_event/treeMCDY.GetEntries() + 1))
 
@@ -296,21 +293,19 @@ if(redoMCDYHistos):
         
         if (event.pT_muon.size() == 2):
             if (not (event.Q_muon.at(0) + event.Q_muon.at(1))==0): continue
-            #print "PARTICELLA 0: \t ",  event.pT_muon.at(0), event.eta_muon.at(0), event.phi_muon.at(0), event.E_muon.at(0) 
-            #print "PARTICELLA 1: \t ",  event.pT_muon.at(1), event.eta_muon.at(1), event.phi_muon.at(1), event.E_muon.at(1)
+            print "PARTICELLA 0: \t ",  event.pT_muon.at(0), event.eta_muon.at(0), event.phi_muon.at(0), event.E_muon.at(0) 
+            print "PARTICELLA 1: \t ",  event.pT_muon.at(1), event.eta_muon.at(1), event.phi_muon.at(1), event.E_muon.at(1)
 
             relPFIso_0 = (event.pf_charged_had_iso.at(0) + max (0, event.pf_neutral_had_iso.at(0) + event.pf_photon_iso.at(0) - 0.5 * event.pu_charged_had_iso.at(0))) / event.pT_muon.at(0)
             relPFIso_1 = (event.pf_charged_had_iso.at(1) + max (0, event.pf_neutral_had_iso.at(1) + event.pf_photon_iso.at(1) - 0.5 * event.pu_charged_had_iso.at(1))) / event.pT_muon.at(1)
 
-            #if (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and event.sip_muon.at(0) < 4. and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
-            if (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
-                #print "0 TAG e 1 PROBE!"
+            if (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and event.sip_muon.at(0) < 4. and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
+                print "0 TAG e 1 PROBE!"
                 pb = "at1"
                 tag.SetPtEtaPhiE (event.pT_muon.at(0), event.eta_muon.at(0), event.phi_muon.at(0), event.E_muon.at(0))                                                                 
                 probe.SetPtEtaPhiE (event.pT_muon.at(1), event.eta_muon.at(1), event.phi_muon.at(1), event.E_muon.at(1))                                                                 
-            #elif (event.pT_muon.at(1) > 30. and event.is_pf_muon.at(1) and event.sip_muon.at(1) < 4. and relPFIso_1 < 0.2 and event.dxy_muon.at(1) < 0.5 and event.dz_muon.at(1) < 1.):
-            elif (event.pT_muon.at(0) > 30. and event.is_pf_muon.at(0) and relPFIso_0 < 0.2 and event.dxy_muon.at(0) < 0.5 and event.dz_muon.at(0) < 1.):
-                #print "1 TAG e 0 PROBE!"
+            if (event.pT_muon.at(1) > 30. and event.is_pf_muon.at(1) and event.sip_muon.at(1) < 4. and relPFIso_1 < 0.2 and event.dxy_muon.at(1) < 0.5 and event.dz_muon.at(1) < 1.):
+                print "1 TAG e 0 PROBE!"
                 pb = "at0"
                 tag.SetPtEtaPhiE (event.pT_muon.at(1), event.eta_muon.at(1), event.phi_muon.at(1), event.E_muon.at(1))                                                                 
                 probe.SetPtEtaPhiE (event.pT_muon.at(0), event.eta_muon.at(0), event.phi_muon.at(0), event.E_muon.at(0))                                                                 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-# *******************
+# ***********************************************************************************
 # usage: 
 #    - choose the options 
 #    - python FitMC.py
@@ -11,7 +11,7 @@
 #    - store weighted events in histos and save them in a file.root (if redoHistos)
 #    - read the root file 
 #    - fit the histos with a function from helper.py and print on file fit results
-# ********************
+# ***********************************************************************************
  
 import json
 import ROOT, helper, math

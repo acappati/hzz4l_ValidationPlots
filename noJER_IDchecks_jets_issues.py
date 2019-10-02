@@ -2,7 +2,7 @@
 
 # *********************************************
 # usage: 
-#    python IDchecks_jets_issues
+#    python noJER_IDchecks_jets_issues
 #
 # *********************************************
 

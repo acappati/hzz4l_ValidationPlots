@@ -1,26 +1,18 @@
-#define createNewRootfileDATA_cxx
-#include "createNewRootfileDATA.h"
+#define createNewRootfileDY_cxx
+#include "createNewRootfileDY.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 
-void createNewRootfileDATA::Loop()
+void createNewRootfileDY::Loop()
 {
-//   In a ROOT session, you can do:
-//      root> .L createNewRootfileDATA.C
-//      root> createNewRootfileDATA t
-//      root> t.GetEntry(12); // Fill t data members with entry number 12
-//      root> t.Show();       // Show values of entry 12
-//      root> t.Show(16);     // Read and show values of entry 16
-//      root> t.Loop();       // Loop on all entries
-//
-  TString infilename  = "/eos/user/m/mkovac/Data/Muons/SingleMuon_2016_10_9_2019/train.root";
-  TString outfilename = "trainDATA_CJLSTformat.root";
+  TString infilename  = "/eos/user/m/mkovac/Data/Muons/DY_2016_10_9_2019/train.root";
+  TString outfilename = "trainDY_CJLSTformat.root";
 
   TFile *f_in = TFile::Open(infilename, "READ");
   std::cout << "Opening and processing file \t" << infilename << std::endl;
 
-  TTree *DATAtree = (TTree*)f_in->Get("ntuplizer/tree");
+  TTree *DYtree = (TTree*)f_in->Get("ntuplizer/tree");
 
   TFile * outfile = new TFile ( outfilename, "RECREATE" );
   TTree * tree    = new TTree ( "tree", "Muon pairs for T&P" );
@@ -79,7 +71,6 @@ void createNewRootfileDATA::Loop()
 
 
   if (fChain == 0) return;
-  //Long64_t nentries = 100;
   Long64_t nentries = fChain->GetEntriesFast();
   std::cout << "Number of entries in Data tree " << nentries << "\n";
   Long64_t nbytes = 0, nb = 0;
@@ -87,16 +78,12 @@ void createNewRootfileDATA::Loop()
   Int_t ev = 0;
   
   for (Long64_t jentry=0; jentry<nentries;jentry++) 
-  //for (Long64_t jentry=0; jentry<100; jentry++) 
     {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       if  ((jentry % 100000) == 0) std::cout << "Event " << jentry << '\n';
 
-      //std::cout << "===============EVENTO " << jentry << '\n';
-      //std::cout << "ev is \t" << ev << '\n';
-      
       if (nEvent == ev)
 	{
 	  Event.push_back(nEvent);
@@ -124,21 +111,15 @@ void createNewRootfileDATA::Loop()
 	  pf_photon_iso.push_back(mu_pf_photon_iso);
 	  pu_charged_had_iso.push_back(mu_pu_charged_had_iso);
 	  ev = nEvent;
-	  //std::cout << "******************** PT  = " << mu_pT << '\n';
-	  //std::cout << "******************** ETA = " << mu_eta << '\n';
-	  //std::cout << "******************** PHI = " << mu_phi << '\n';
-	  //std::cout << "I AM nEvent EQUAL TO MY PREVIOUS VALUE? \t" << nEvent << '\n';
 	 }
 
        else if (nEvent != ev)
 	 {
-	   // std::cout << "VECTOR SIZE = " << Event.size() << '\n';
-	   if (Event.size() >= 2) 
-	     {
-	       tree->Fill();
-	       //std::cout << "\t FILLED\n";
-	     }
-	   std::cout << "nEvent is \t" << ev << '\n';
+           if (Event.size() >= 2)
+             {
+               tree->Fill();
+               //std::cout << "\t FILLED\n";                                                                                                             
+             }
 	   Event.clear();
 	   Run.clear();
 	   Q_muon.clear();
@@ -190,19 +171,14 @@ void createNewRootfileDATA::Loop()
 	   pu_charged_had_iso.push_back(mu_pu_charged_had_iso);
 	   
 	   ev = nEvent;
-	   //std::cout << "but now it is \t" << nEvent << '\n';
-	   //std::cout << "******************** PT  = " << mu_pT << '\n';
-	   //std::cout << "******************** ETA = " << mu_eta << '\n';
-	   //std::cout << "******************** PHI = " << mu_phi << '\n';
-	   //std::cout << "********************\n";
 	 }
      }
 
-tree->Write();                                                                                                                         
-tree->Print();                                                                                                                           
-                                                                                                                                                                       
-delete tree;                                                                                                                        
-outfile->Write();                                                                                                        
-outfile->Close();                                                                                                                     
-delete outfile;                                                                                                                                         
+tree->Write();                                                                                                                              
+tree->Print();                                                                                                                            
+                                                                                                                                                                      
+delete tree;                                                                                                                                              
+outfile->Write();                                                                                                                                     
+outfile->Close();                                                                                                                    
+delete outfile;                                                 
 }

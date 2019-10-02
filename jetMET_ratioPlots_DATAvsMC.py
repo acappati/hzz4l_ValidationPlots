@@ -2,7 +2,7 @@
 
 # *********************************************
 # usage: 
-#    python ratioPlots_jetsDistrib_DATAvsMC.py
+#    python jetMET_ratioPlots_DATAvsMC.py
 #
 # *********************************************
 

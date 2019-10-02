@@ -1,10 +1,10 @@
 #!/usr/bin/en math
 
-# *******************
+# *********************************
 # usage: 
 #    python IsoDistrib_DATAvsMC.py
 #
-# ******************
+# *********************************
 
 import json
 import ROOT, math, helper, CMSGraphics, CMS_lumi

@@ -2,7 +2,7 @@
 
 # ***************************************
 # usage: 
-#    python checkBDTvariables_DATAvsMC.py
+#    python IsolationVariables_DATAvsMC.py
 #
 # ***************************************
 
